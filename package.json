@@ -1,0 +1,12 @@
+{
+  "name": "myresumeserver",
+  "version": "1.0.0",
+  "description": "个人网站服务端",
+  "main": "index.js",
+  "scripts": {
+    "start":"node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "张显磊",
+  "license": "ISC"
+}
