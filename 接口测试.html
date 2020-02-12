@@ -10,23 +10,67 @@
 
 <body>
     <script>
-        var data = JSON.stringify({
-            name: 'gouzi',
-            content: '第一次来呀！'
-        });
-        fetch('http://localhost:3000/myWebSite/replyComment', {
+        var a = { "_id": { "$oid": "5e42b22161478f3750fb48e9" }, "createTime": { "$date": { "$numberLong": "1581429277707" } }, "comments": [], "name": "gouzi", "content": "第一次来呀！", "praise": { "$numberInt": "0" }, "disapprove": { "$numberInt": "0" }, "__v": { "$numberInt": "0" } }
+        // 回复留言
+        // fetch('http://localhost:3000/myWebSite/replyComment', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/x-www-form-urlencoded'
+        //     },
+        //     body: JSON.stringify({id:'5e42b22161478f3750fb48e9',content:'第二次来呀'}),
+        //     mode: 'cors'
+        // })
+        //     .then(res => res.json())
+        //     .then((res) => console.log(JSON.parse(res)));
+
+
+
+        // 获取所有留言
+        // fetch('http://localhost:3000/myWebSite/getComments')
+        //     .then(res=>res.json())
+        //     .then(res=>console.log(res))
+
+
+        // 添加留言
+        // var data = JSON.stringify({
+        //     name: 'cat',
+        //     content: '这是一只猫'
+        // });
+        // fetch('http://localhost:3000/myWebSite/submitComment', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: data,
+        //     mode: 'cors'
+        // })
+        //     .then(res => res.json())
+        //     .then(res => console.log(res));
+
+        // 点赞
+        fetch('http://localhost:3000/myWebSite/praise', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/json'
             },
-            body: "id=5e426e72b4ed960d20473f74&content=第二次来呀！",
-            mode: 'cors'
+            body: JSON.stringify({ id: '5e42b22161478f3750fb48e9'}),
+            mode:'cors'
         })
             .then(res => res.json())
-            .then((res) => console.log(JSON.parse(res)));    
-            // fetch('http://localhost:3000/myWebSite/getComments')
-            //     .then(res=>res.json())
-            //     .then(res=>console.log(res))
+            .then(res => console.log(res));
+
+        // 踩
+        // fetch('http://localhost:3000/myWebSite/disapprove', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({ id: '5e42b22161478f3750fb48e9', }),
+        //     mode:'cors'
+        // })
+        //     .then(res => res.json())
+        //     .then(res => console.log(res));
+
     </script>
 </body>
 

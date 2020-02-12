@@ -5,6 +5,7 @@ const app = express();
 // 开启跨域 
 app.all('*', (req, res, next) => {
     res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Headers", "content-type");
     next();
 })
 
@@ -41,24 +42,19 @@ app.get('/myWebSite/getComments', (req, res) => {
     })
 })
 
-// 添加评论
+// 添加留言
 app.post('/myWebSite/submitComment', (req, res) => {
     const { name, content, createTime } = req.body;
-    if (req.method === 'POST') {
-        const comment = new Comments({
-            name: name,
-            content: content,
-            createTime: createTime,
-            praise: 0,
-            disapprove: 0,
-            comments: []
-        })
-        comment.save();
-        res.json(JSON.stringify({ status: 200, message: '评论成功' }));
-    }
-    else {
-        res.json(JSON.stringify({ status: 200, message: '评论失败' }));
-    }
+    const comment = new Comments({
+        name: name,
+        content: content,
+        createTime: createTime,
+        praise: 0,
+        disapprove: 0,
+        comments: []
+    })
+    comment.save();
+    res.json(JSON.stringify({ status: 200, message: '留言成功' }));
 })
 
 // 回复留言
@@ -73,15 +69,16 @@ app.post('/myWebSite/replyComment', async (req, res) => {
 
 // 点赞
 app.post('/myWebSite/praise', async (req, res) => {
-    const { id } = req;
+    const { id } = req.body;
     const { praise } = await Comments.findById(id);
     await Comments.findByIdAndUpdate(id, { praise: praise + 1 });
     res.json(JSON.stringify({ status: 200, message: '点赞成功' }));
 })
 
+
 // 踩
 app.post('/myWebSite/disapprove', async (req, res) => {
-    const { id } = req;
+    const { id } = req.body;
     const { disapprove } = await Comments.findById(id);
     await Comments.findByIdAndUpdate(id, { disapprove: disapprove + 1 });
     res.json(JSON.stringify({ status: 200, message: '踩一下' }));
