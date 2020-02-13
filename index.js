@@ -35,15 +35,16 @@ const Comments = mongoose.model('comments', CommentsSchema);
 
 // 获取评论列表
 app.get('/myWebSite/getComments', (req, res) => {
-    Comments.find({
-        name: /^[a-zA-Z0-9_-]{4,16}$/
-    }, (err, result) => {
+    console.log('获取了一次评论列表');
+    Comments.find({}, (err, result) => {
+        console.log(result);
         res.json(JSON.stringify(result));
     })
 })
 
 // 添加留言
 app.post('/myWebSite/submitComment', (req, res) => {
+    console.log('留言一次');
     const { name, content, createTime } = req.body;
     const comment = new Comments({
         name: name,
@@ -59,9 +60,17 @@ app.post('/myWebSite/submitComment', (req, res) => {
 
 // 回复留言
 app.post('/myWebSite/replyComment', async (req, res) => {
-    const { id, content } = req.body;
+    console.log('回复留言一次');
+    const { id, content, name } = req.body;
+    const comment = new Comments({
+        name: name,
+        content: content,
+        createTime: createTime,
+        praise: 0,
+        disapprove: 0,
+    })
     const { comments } = await Comments.findById(id);
-    comments.push(content);
+    comments.push(comment);
     await Comments.findByIdAndUpdate(id, { comments: comments });
     res.json(JSON.stringify({ status: 200, message: '评论成功' }));
 })
@@ -69,6 +78,7 @@ app.post('/myWebSite/replyComment', async (req, res) => {
 
 // 点赞
 app.post('/myWebSite/praise', async (req, res) => {
+    console.log('点赞一次');
     const { id } = req.body;
     const { praise } = await Comments.findById(id);
     await Comments.findByIdAndUpdate(id, { praise: praise + 1 });
@@ -78,6 +88,7 @@ app.post('/myWebSite/praise', async (req, res) => {
 
 // 踩
 app.post('/myWebSite/disapprove', async (req, res) => {
+    console.log('踩一次');
     const { id } = req.body;
     const { disapprove } = await Comments.findById(id);
     await Comments.findByIdAndUpdate(id, { disapprove: disapprove + 1 });

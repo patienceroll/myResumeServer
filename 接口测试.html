@@ -32,20 +32,20 @@
 
 
         // 添加留言
-        // var data = JSON.stringify({
-        //     name: 'cat',
-        //     content: '这是一只猫'
-        // });
-        // fetch('http://localhost:3000/myWebSite/submitComment', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: data,
-        //     mode: 'cors'
-        // })
-        //     .then(res => res.json())
-        //     .then(res => console.log(res));
+        var data = JSON.stringify({
+            name: 'cat',
+            content: '这是一只猫'
+        });
+        fetch('http://localhost:3000/myWebSite/submitComment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: data,
+            mode: 'cors'
+        })
+            .then(res => res.json())
+            .then(res => console.log(res));
 
         // 点赞
         fetch('http://localhost:3000/myWebSite/praise', {
